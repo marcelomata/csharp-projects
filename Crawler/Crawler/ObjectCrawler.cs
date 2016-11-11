@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace CrawlerTrabble
 {
-    class ObjectCrawler
+    class Crawler
     {
         
     }
 
-    class RestaurantCrawler : ObjectCrawler
+    class RestaurantCrawler : Crawler
     {
+
+        public RestaurantCrawler(String url)
+        {
+
+        }
 
     }
 }
