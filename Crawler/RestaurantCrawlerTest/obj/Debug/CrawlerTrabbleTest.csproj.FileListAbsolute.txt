@@ -1,0 +1,1 @@
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\obj\Debug\CrawlerTrabbleTest.csprojResolveAssemblyReference.cache

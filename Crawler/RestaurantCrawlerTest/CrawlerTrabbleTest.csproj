@@ -53,6 +53,12 @@
     <Compile Include="RestaurantCrawlerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Crawler\CrawlerTrabble.csproj">
+      <Project>{2acf7a98-0a8e-4304-b9d9-22419e039ccf}</Project>
+      <Name>CrawlerTrabble</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

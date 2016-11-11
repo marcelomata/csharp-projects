@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections;
+using CrawlerTrabble;
 using System;
 
 namespace UnitTestProject1
@@ -76,7 +77,7 @@ namespace UnitTestProject1
         {
             String description = "";
 
-            ArrayList data = crawler.getData(url);
+            ArrayList data = crawler.getDataItens(url);
             int expectedNumItens = 8;
             Assert.AreEqual(expectedNumItens, data.Count, 0, "Number of itens in the menu does not match.");
 
