@@ -1,0 +1,6 @@
+C:\workspaces\wTrabble\Crawler\Crawler\bin\Debug\Crawler.exe.config
+C:\workspaces\wTrabble\Crawler\Crawler\bin\Debug\Crawler.exe
+C:\workspaces\wTrabble\Crawler\Crawler\bin\Debug\Crawler.pdb
+C:\workspaces\wTrabble\Crawler\Crawler\obj\Debug\Crawler.csprojResolveAssemblyReference.cache
+C:\workspaces\wTrabble\Crawler\Crawler\obj\Debug\Crawler.exe
+C:\workspaces\wTrabble\Crawler\Crawler\obj\Debug\Crawler.pdb
