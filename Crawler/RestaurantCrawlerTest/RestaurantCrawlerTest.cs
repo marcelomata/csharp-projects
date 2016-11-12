@@ -29,7 +29,22 @@ namespace UnitTestProject1
             //http://basilico.net/fathers_day_menu.html image, need OCR
             //http://basilico.net/valentines_day_menu.html image, need OCR
             int expectedNumUrls = 6;
-            Assert.AreEqual(expectedNumUrls, urlsMenu.Count, 0, "Number of urls does not match.");        
+            Assert.AreEqual(expectedNumUrls, urlsMenu.Count, 0, "Number of urls does not match.");
+        }
+
+        [TestMethod]
+        public void TestNumLunchMenuCategories()
+        {
+            RestaurantCrawler crawler = new RestaurantCrawler(url);
+            ArrayList urlsMenu = getUrlsMenu(crawler);
+            ArrayList data;
+            String urlMenu = getUrlLunchMenu(urlsMenu);
+            crawler.setUrlMenu(urlMenu);
+            crawler.loadCategoriesMenu();
+            ArrayList categoriesMenu = crawler.getCategoriesMenu();
+            ArrayList expectedCategories = getExpectedCategoriesLunchMenu();
+
+            Assert.AreEqual(expectedCategories.Count, categoriesMenu.Count, 0, "Number of categories of lunch menu does not match.");        
         }
 
         [TestMethod]
@@ -38,12 +53,12 @@ namespace UnitTestProject1
             RestaurantCrawler crawler = new RestaurantCrawler(url);
             ArrayList urlsMenu = getUrlsMenu(crawler);
             ArrayList data;
-            ArrayList expectedData = getExpectedItens();
+            ArrayList expectedData = getExpectedCategoriesLunchMenu();
 
             foreach (String urlMenu in urlsMenu)
             {
                 data = crawler.getDataItens(urlMenu);
-                int expectedNumItens = 8;
+                int expectedNumItens = 6;
                 Assert.AreEqual(expectedNumItens, data.Count, 0, "Number of itens in the menu does not match.");
                 for (int i = 0; i < data.Count; i++)
                 {
@@ -56,12 +71,6 @@ namespace UnitTestProject1
         public void TestGetMenuDescriptionBeef()
         {
             RestaurantCrawler crawler = new RestaurantCrawler(url);
-            //http://www.basilico.net/lunch_menu.html
-            //http://www.basilico.net/dinner_menu.html
-            //http://www.basilico.net/catering_menu.html
-            //http://www.basilico.net/funeral_luncheon.html  the simple crawler will not take this menu for now
-            //http://basilico.net/fathers_day_menu.html image, need OCR
-            //http://basilico.net/valentines_day_menu.html image, need OCR
             ArrayList urlsMenu = getUrlsMenu(crawler);
             int expectedNumUrls = 6;
             Assert.AreEqual(expectedNumUrls, urlsMenu.Count, 0, "Number of urls does not match.");
@@ -75,24 +84,24 @@ namespace UnitTestProject1
             }
         }
 
-        private ArrayList getExpectedItens()
+        private ArrayList getExpectedCategoriesLunchMenu()
         {
             ArrayList expectedData = new ArrayList();
-            expectedData.Add("BEEF");
-            expectedData.Add("LAMB");
-            expectedData.Add("CHICKEN");
-            expectedData.Add("FISH");
-            expectedData.Add("PORK");
-            expectedData.Add("OTHERS");
-            expectedData.Add("CODIMENTS");
+            expectedData.Add("Antipasti");
+            expectedData.Add("Minestre");
+            expectedData.Add("Insalate");
+            expectedData.Add("Sandwiches and Wraps");
+            expectedData.Add("Pasta and Risotto");
+            expectedData.Add("Entrees");
+            expectedData.Add("Basilico House Specials");
 
             return expectedData;
         }
 
         private ArrayList getUrlsMenu(RestaurantCrawler crawler)
         {
-            crawler.setKeyWord("menu");
-            ArrayList urlsMenu = crawler.getUrlsKeyWord();
+            crawler.loadUrlsMenus();
+            ArrayList urlsMenu = crawler.getUrlsMenu();
             return urlsMenu;
         }
 
@@ -105,6 +114,20 @@ namespace UnitTestProject1
             Assert.AreEqual(expectedNumItens, data.Count, 0, "Number of itens in the menu does not match.");
 
             return description;
+        }
+
+        private String getUrlLunchMenu(ArrayList urls)
+        {
+            String urlResult = null;
+            foreach (String urlMenu in urls)
+            {
+                if (urlMenu.Contains("lunch"))
+                {
+                    urlResult = urlMenu;
+                }
+            }
+
+            return urlResult;
         }
     }
 }

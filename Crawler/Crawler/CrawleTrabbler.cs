@@ -81,11 +81,12 @@ namespace CrawlerTrabble
             return newLinks;
         }
 
-
     }
 
     public class RestaurantCrawler : CrawlerTrabble
     {
+
+        private ArrayList urlsMenu;
 
         public RestaurantCrawler(String url) : base(url)
         {
@@ -99,12 +100,15 @@ namespace CrawlerTrabble
             return dataItens;
         }
 
-        public ArrayList getUrlsMenus()
+        public void loadUrlsMenus()
         {
-            ArrayList urls = new ArrayList();
             setKeyWord("menu");
-            urls = getUrlsKeyWord();
-            return urls;
+            urlsMenu = getUrlsKeyWord();
+        }
+
+        public ArrayList getUrlsMenu()
+        {
+            return urlsMenu;
         }
 
     }
