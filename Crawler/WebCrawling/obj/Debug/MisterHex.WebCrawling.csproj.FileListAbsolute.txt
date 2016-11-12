@@ -1,0 +1,15 @@
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\bin\Debug\MisterHex.WebCrawling.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\bin\Debug\MisterHex.WebCrawling.pdb
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\bin\Debug\CsQuery.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\bin\Debug\System.Reactive.Core.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\bin\Debug\System.Reactive.Interfaces.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\bin\Debug\System.Reactive.Linq.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\bin\Debug\System.Reactive.PlatformServices.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\bin\Debug\CsQuery.xml
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\bin\Debug\System.Reactive.Core.xml
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\bin\Debug\System.Reactive.Interfaces.xml
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\bin\Debug\System.Reactive.Linq.xml
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\bin\Debug\System.Reactive.PlatformServices.xml
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\obj\Debug\MisterHex.WebCrawling.csprojResolveAssemblyReference.cache
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\obj\Debug\MisterHex.WebCrawling.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\WebCrawling\obj\Debug\MisterHex.WebCrawling.pdb
