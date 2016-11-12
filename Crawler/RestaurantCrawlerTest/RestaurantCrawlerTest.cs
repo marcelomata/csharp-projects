@@ -5,65 +5,115 @@ using System;
 
 namespace UnitTestProject1
 {
+    /*
+     * Test if the RestarauntCrawler is working properly.
+     * In case of the website change these tests are going to figure about it
+     * 
+     * The website used in this test is "http://www.basilico.net/"
+     * 
+     * It menu is organized as follows
+     * Page (1 page per Menu. Menus to different events) -> Menu categories -> Menu itens -> Menu item descriptions
+     * 
+     */
     [TestClass]
     public class RestaurantCrawlerTest
     {
         private String url;
+        private RestaurantCrawler crawler;
 
+        /*
+         * This method initialize the general variables used in all tests case
+         */
         [TestInitialize()]
         public void Initialize() 
         { 
             //this.url = "http://www.carnivore.com.sg/"; //403 error to access this url. Need check why.
+
+            //The structure of the menu of this restaurent website is
+            //Page (manu name) -> Menu categories -> Menu itens -> Menu item descriptions
             this.url = "http://www.basilico.net/";
+            crawler = new RestaurantCrawler(url);
         }
 
+        /*
+         * Check if the number of pages with menu informations are like the expected
+         */
         [TestMethod]
         public void TestCheckNumUrlMenu()
         {
-            RestaurantCrawler crawler = new RestaurantCrawler(url);
             ArrayList urlsMenu = getUrlsMenu(crawler);
+            ArrayList urlsMenuExpected = geExpectedUrlsMenu();
             //http://www.basilico.net/lunch_menu.html
             //http://www.basilico.net/dinner_menu.html
             //http://www.basilico.net/catering_menu.html
+            //http://www.basilico.net///private_events_menu.html
             //http://www.basilico.net/funeral_luncheon.html  the simple crawler will not take this menu for now
             //http://basilico.net/fathers_day_menu.html image, need OCR
             //http://basilico.net/valentines_day_menu.html image, need OCR
-            int expectedNumUrls = 6;
-            Assert.AreEqual(expectedNumUrls, urlsMenu.Count, 0, "Number of urls does not match.");
+            Assert.AreEqual(urlsMenuExpected.Count, urlsMenu.Count, 0, "Number of urls does not match.");
+        }
+
+        /*
+         * Check the urls that have manu information
+         */
+        [TestMethod]
+        public void TestCheckUrlMenu()
+        {
+            ArrayList urlsMenu = getUrlsMenu(crawler);
+            ArrayList urlsMenuExpected = geExpectedUrlsMenu();
+            
+            Assert.AreEqual(urlsMenuExpected.Count, urlsMenu.Count, 0, "Number of urls does not match.");
+
+            for (int i = 0; i < urlsMenu.Count; i++)
+            {
+                Assert.AreEqual((String)urlsMenuExpected[i], (String)urlsMenu[i], true, "Found the url " + urlsMenu[i] + " instead the expected " + urlsMenuExpected[i]);
+            }
         }
 
         [TestMethod]
         public void TestNumLunchMenuCategories()
         {
-            RestaurantCrawler crawler = new RestaurantCrawler(url);
             ArrayList urlsMenu = getUrlsMenu(crawler);
-            ArrayList data;
             String urlMenu = getUrlLunchMenu(urlsMenu);
-            crawler.setUrlMenu(urlMenu);
+            crawler.setCurrentUrlMenu(urlMenu);
             crawler.loadCategoriesMenu();
             ArrayList categoriesMenu = crawler.getCategoriesMenu();
             ArrayList expectedCategories = getExpectedCategoriesLunchMenu();
 
-            Assert.AreEqual(expectedCategories.Count, categoriesMenu.Count, 0, "Number of categories of lunch menu does not match.");        
+            Assert.AreEqual(expectedCategories.Count, categoriesMenu.Count, 0, "Name of the category different of the expected.");        
         }
 
         [TestMethod]
-        public void TestGetMenuName()
+        public void TestCategoryNameLunchMenu()
         {
-            RestaurantCrawler crawler = new RestaurantCrawler(url);
             ArrayList urlsMenu = getUrlsMenu(crawler);
-            ArrayList data;
-            ArrayList expectedData = getExpectedCategoriesLunchMenu();
+            String urlMenu = getUrlLunchMenu(urlsMenu);
+            crawler.setCurrentUrlMenu(urlMenu);
+            crawler.loadCategoriesMenu();
+            ArrayList categoriesMenu = crawler.getCategoriesMenu();
+            ArrayList expectedCategories = getExpectedCategoriesLunchMenu();
 
-            foreach (String urlMenu in urlsMenu)
+            Assert.AreEqual(expectedCategories.Count, categoriesMenu.Count, 0, "Name of the category different of the expected.");
+
+            for (int i = 0; i < urlsMenu.Count; i++)
             {
-                data = crawler.getDataItens(urlMenu);
-                int expectedNumItens = 6;
-                Assert.AreEqual(expectedNumItens, data.Count, 0, "Number of itens in the menu does not match.");
-                for (int i = 0; i < data.Count; i++)
-                {
-                    Assert.AreEqual((String)expectedData[i], (String)data[i], true, "Number of itens in the menu does not match.");
-                }
+                Assert.AreEqual((String)expectedCategories[i], (String)categoriesMenu[i], true, "Found the category " + categoriesMenu[i] + " instead the expected " + expectedCategories[i]);
+            }
+        }
+
+        [TestMethod]
+        public void TestGetAntipastiCategoryItens()
+        {
+            ArrayList urlsMenu = getUrlsMenu(crawler);
+            String category = getAntipastiCategory(urlsMenu);
+            ArrayList itens = crawler.getCategoryItens(category);
+            ArrayList expectedItens = getExpectedAntipastiItens();
+
+            Assert.AreEqual(expectedItens.Count, itens.Count, 0, "Number of itens to category Antipasti doesn't match.");
+
+            for (int i = 0; i < urlsMenu.Count; i++)
+            {
+                Assert.AreEqual((String)expectedItens[i], (String)itens[i], true, "Found the item " + itens[i] + " instead the expected " + expectedItens[i]);
             }
         }
 
@@ -98,6 +148,26 @@ namespace UnitTestProject1
             return expectedData;
         }
 
+        private ArrayList getExpectedAntipastiItens()
+        {
+            ArrayList expectedData = new ArrayList();
+            
+            expectedData.Add("Antipasto Italiano");
+            expectedData.Add("Baked Clams (half dozen)");
+            expectedData.Add("Zucchini Fritti");
+            expectedData.Add("Carciofi Ripieni");
+
+            expectedData.Add("Prosciutto con Melon");
+            expectedData.Add("Bruschetta (toasted bread)");
+            expectedData.Add("Sausage & Escarole");
+
+            expectedData.Add("Calamari Fritti or Genovese");
+            expectedData.Add("Cozze alla Marinara");
+            expectedData.Add("Shrimp Cocktail");
+
+            return expectedData;
+        }
+
         private ArrayList getUrlsMenu(RestaurantCrawler crawler)
         {
             crawler.loadUrlsMenus();
@@ -128,6 +198,34 @@ namespace UnitTestProject1
             }
 
             return urlResult;
+        }
+
+        private ArrayList geExpectedUrlsMenu()
+        {
+            ArrayList expectedUrlMenu = new ArrayList();
+
+            expectedUrlMenu.Add("http://www.basilico.net/lunch_menu.html");
+            expectedUrlMenu.Add("http://www.basilico.net/dinner_menu.html");
+            expectedUrlMenu.Add("http://www.basilico.net///private_events_menu.html");
+            expectedUrlMenu.Add("http://www.basilico.net/catering_menu.html");
+            expectedUrlMenu.Add("http://basilico.net/fathers_day_menu.html");
+            expectedUrlMenu.Add("http://basilico.net/valentines_day_menu.html");
+
+            return expectedUrlMenu;
+        }
+
+        private String getAntipastiCategory(ArrayList categories) 
+        {
+            String categoryResult = null;
+            foreach (String catebory in categories)
+            {
+                if (catebory.Contains("Antipasti"))
+                {
+                    return catebory;
+                }
+            }
+
+            return categoryResult;
         }
     }
 }

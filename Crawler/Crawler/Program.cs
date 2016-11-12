@@ -18,7 +18,8 @@ namespace CrawlerTrabble
             String url = "http://www.basilico.net/";
             RestaurantCrawler crawler = new RestaurantCrawler(url);
             crawler.setKeyWord("menu");
-            ArrayList urlsMenu = crawler.getUrlsMenus();
+            crawler.loadUrlsMenus();
+            ArrayList urlsMenu = crawler.getUrlsMenu();
             Console.WriteLine(urlsMenu.Count);
 
             //using MisterHex.WebCrawling;
