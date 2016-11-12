@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Net;
 
 
 namespace CrawlerTrabble
@@ -13,20 +15,25 @@ namespace CrawlerTrabble
     {
 
         private Uri uri;
+        private String url;
         private String keyWord;
 
         public CrawlerTrabble(String url) 
         {
-            this.uri = new Uri("http://www.carnivore.com.sg/");
-            ISet<String> set = getNewLinks(url);
+            this.uri = new Uri(url);
+            this.url = url;
         }
 
-        public ArrayList getUrls()
+        public ArrayList getUrlsKeyWord()
         {
             ArrayList urls = new ArrayList();
-
-
-
+            ISet<String> set = getLinksReference(url);
+            ISet<String> urlsMenu;
+            foreach (String urlSet in set)
+            {
+                urlsMenu = getSetStringMatching(urlSet, "menu");
+                urls.Add(urlsMenu);
+            }
             return urls;
         }
 
@@ -37,12 +44,27 @@ namespace CrawlerTrabble
 
         public abstract ArrayList getDataItens(String url);
 
-        public ISet<string> getNewLinks(string content)
+        String loadHtmlAsString(String url)
         {
-            Regex regexLink = new Regex("(?<=<a\\s*?href=(?:'|\"))[^'\"]*?(?=(?:'|\"))");
+            WebClient webClient = new WebClient();
+            return webClient.DownloadString(url);
+        }
 
-            ISet<string> newLinks = new HashSet<string>();
-            foreach (var match in regexLink.Matches(content))
+        ISet<String> getLinksReference(String url)
+        {
+            String html = loadHtmlAsString(url);
+            ISet<String> linksReference = getSetStringMatching(html, "(?<=<a\\s*?href=(?:'|\"))[^'\"]*?(?=(?:'|\"))");
+            return linksReference;
+        }
+
+        ISet<String> getSetStringMatching(String inString, String word) 
+        {
+            String html = loadHtmlAsString(url);
+            ISet<String> newLinks = new HashSet<String>();
+
+            Regex regexLink = new Regex(word);
+
+            foreach (var match in regexLink.Matches(html))
             {
                 if (!newLinks.Contains(match.ToString()))
                     newLinks.Add(match.ToString());

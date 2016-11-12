@@ -66,7 +66,7 @@ namespace UnitTestProject1
         {
             crawler.setKeyWord("menu");
             //http://www.carnivore.com.sg/churrasco-menu
-            ArrayList urlsMenu = crawler.getUrls();
+            ArrayList urlsMenu = crawler.getUrlsKeyWord();
             int expectedNumUrls = 1;
             Assert.AreEqual(expectedNumUrls, urlsMenu.Count, 0, "Number of urls does not match.");
 

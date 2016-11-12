@@ -5,15 +5,5 @@ C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\obj\Debug\Cr
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\Crawler.exe.config
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\Crawler.exe
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\Crawler.pdb
-C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\MisterHex.WebCrawling.dll
-C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\System.Reactive.Core.dll
-C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\System.Reactive.Linq.dll
-C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\CsQuery.dll
-C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\System.Reactive.Interfaces.dll
-C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\MisterHex.WebCrawling.pdb
-C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\System.Reactive.Core.xml
-C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\System.Reactive.Linq.xml
-C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\CsQuery.xml
-C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\System.Reactive.Interfaces.xml
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\obj\Debug\Crawler.exe
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\obj\Debug\Crawler.pdb
