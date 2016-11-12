@@ -14,8 +14,8 @@ namespace CrawlerTrabble
     public abstract class CrawlerTrabble
     {
 
-        private Uri uri;
-        private String url;
+        protected Uri uri;
+        protected String url;
         private String keyWord;
 
         public CrawlerTrabble(String url) 
@@ -28,11 +28,20 @@ namespace CrawlerTrabble
         {
             ArrayList urls = new ArrayList();
             ISet<String> set = getLinksReference(url);
-            ISet<String> urlsMenu;
+            String newUrl;
+            String urlCheck;
             foreach (String urlSet in set)
             {
-                urlsMenu = getSetStringMatching(urlSet, "menu");
-                urls.Add(urlsMenu);
+                if (urlSet.Contains(keyWord)) 
+                {
+                    newUrl = urlSet;
+                    urlCheck = url.Replace("www", "").Replace("https://.", "").Replace("http://.", "");
+                    if (!newUrl.Contains(urlCheck))
+                    {
+                        newUrl = url + "/" + urlSet;
+                    }
+                    urls.Add(newUrl);
+                }
             }
             return urls;
         }
@@ -44,27 +53,26 @@ namespace CrawlerTrabble
 
         public abstract ArrayList getDataItens(String url);
 
-        String loadHtmlAsString(String url)
+        protected String loadHtmlAsString(String url)
         {
             WebClient webClient = new WebClient();
             return webClient.DownloadString(url);
         }
 
-        ISet<String> getLinksReference(String url)
+        protected ISet<String> getLinksReference(String url)
         {
             String html = loadHtmlAsString(url);
-            ISet<String> linksReference = getSetStringMatching(html, "(?<=<a\\s*?href=(?:'|\"))[^'\"]*?(?=(?:'|\"))");
+            ISet<String> linksReference = getStringMatching(html, "(?<=<a\\s*?href=(?:'|\"))[^'\"]*?(?=(?:'|\"))");
             return linksReference;
         }
 
-        ISet<String> getSetStringMatching(String inString, String word) 
+        protected ISet<String> getStringMatching(String inString, String word) 
         {
-            String html = loadHtmlAsString(url);
             ISet<String> newLinks = new HashSet<String>();
 
-            Regex regexLink = new Regex(word);
+            Regex regex = new Regex(word);
 
-            foreach (var match in regexLink.Matches(html))
+            foreach (var match in regex.Matches(inString))
             {
                 if (!newLinks.Contains(match.ToString()))
                     newLinks.Add(match.ToString());
@@ -89,6 +97,14 @@ namespace CrawlerTrabble
             ArrayList dataItens = new ArrayList();
 
             return dataItens;
+        }
+
+        public ArrayList getUrlsMenus()
+        {
+            ArrayList urls = new ArrayList();
+            setKeyWord("menu");
+            urls = getUrlsKeyWord();
+            return urls;
         }
 
     }

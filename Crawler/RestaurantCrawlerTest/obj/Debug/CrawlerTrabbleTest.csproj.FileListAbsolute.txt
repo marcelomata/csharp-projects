@@ -1,1 +1,7 @@
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\obj\Debug\CrawlerTrabbleTest.csprojResolveAssemblyReference.cache
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\bin\Debug\UnitTestProject1.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\bin\Debug\UnitTestProject1.pdb
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\bin\Debug\Crawler.exe
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\bin\Debug\Crawler.pdb
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\obj\Debug\UnitTestProject1.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\obj\Debug\UnitTestProject1.pdb
