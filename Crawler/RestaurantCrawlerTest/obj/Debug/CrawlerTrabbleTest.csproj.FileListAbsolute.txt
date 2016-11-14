@@ -5,3 +5,6 @@ C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTes
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\bin\Debug\Crawler.pdb
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\obj\Debug\UnitTestProject1.dll
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\obj\Debug\UnitTestProject1.pdb
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\bin\Debug\HtmlAgilityPack.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\RestaurantCrawlerTest\bin\Debug\HtmlAgilityPack.xml

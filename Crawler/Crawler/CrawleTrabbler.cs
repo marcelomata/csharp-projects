@@ -88,8 +88,53 @@ namespace CrawlerTrabble
             return newLinks;
         }
 
-    }
+        protected ArrayList getNodesByKeyWordClass(String currentUrl) 
+        {
+            ArrayList values = new ArrayList();
+            var findclasses = getHtmlNodeByClasses(currentUrl, keyWord);
 
+            foreach (HtmlAgilityPack.HtmlNode s in findclasses)
+            {
+                values.Add(s.InnerText.Trim());
+            }
+
+            return values;
+        }
+
+        protected ArrayList getNodesByKeyWordClass(String currentUrl, String firstLevel)
+        {
+            ArrayList values = new ArrayList();
+            var findclasses = getHtmlNodeByClasses(currentUrl, firstLevel);
+            foreach (HtmlAgilityPack.HtmlNode s in findclasses)
+            {
+                var findclasses2 = getHtmlNodeByClasses(s, keyWord);
+                foreach (HtmlAgilityPack.HtmlNode c in findclasses)
+                {
+                    values.Add(c.InnerText.Trim());
+                }
+            }
+
+            return values;
+        }
+
+        private IEnumerable<HtmlAgilityPack.HtmlNode> getHtmlNodeByClasses(String currentUrl, String className)
+        {
+            WebClient webClient = new WebClient();
+            HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
+            HtmlAgilityPack.HtmlDocument doc = web.Load(currentUrl);
+
+            var findclasses = doc.DocumentNode.Descendants("div").Where(d => d.Attributes.Contains("class") && d.Attributes["class"].Value.Contains(className));
+
+            return findclasses;
+        }
+
+        private IEnumerable<HtmlAgilityPack.HtmlNode> getHtmlNodeByClasses(HtmlAgilityPack.HtmlNode node, String className)
+        {
+            var findclasses = node.Descendants("div").Where(d => d.Attributes.Contains("class") && d.Attributes["class"].Value.Contains(className));
+            return findclasses;
+        }
+
+    }
 
     /*
      * This class implements the crawler to get specific informations of restaurants
@@ -146,12 +191,19 @@ namespace CrawlerTrabble
 
         public void loadCategoriesMenu()
         {
-
+            setKeyWord("menu_category");
+            categories= getNodesByKeyWordClass(currentUrlMenu);
         }
 
         public ArrayList getCategoriesMenu()
         {
             return categories;
+        }
+
+        public void loadCategoryItem()
+        {
+            //setKeyWord("menu_category");
+            //itens = getNodesByKeyWordClass(currentUrlMenu);
         }
 
         public Dictionary<String, ArrayList> getCategoryItens() 

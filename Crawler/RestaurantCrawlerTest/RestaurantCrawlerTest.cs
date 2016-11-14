@@ -46,7 +46,7 @@ namespace UnitTestProject1
             //http://www.basilico.net/lunch_menu.html
             //http://www.basilico.net/dinner_menu.html
             //http://www.basilico.net/catering_menu.html
-            //http://www.basilico.net///private_events_menu.html
+            //http://www.basilico.net/private_events_menu.html
             //http://www.basilico.net/funeral_luncheon.html  the simple crawler will not take this menu for now
             //http://basilico.net/fathers_day_menu.html image, need OCR
             //http://basilico.net/valentines_day_menu.html image, need OCR
@@ -64,9 +64,11 @@ namespace UnitTestProject1
             
             Assert.AreEqual(urlsMenuExpected.Count, urlsMenu.Count, 0, "Number of urls does not match.");
 
+            String foundUrl;
             for (int i = 0; i < urlsMenu.Count; i++)
             {
-                Assert.AreEqual((String)urlsMenuExpected[i], (String)urlsMenu[i], true, "Found the url " + urlsMenu[i] + " instead the expected " + urlsMenuExpected[i]);
+                foundUrl = ((String)urlsMenu[i]).Replace("///", "/").Replace("//", "/").Replace("http:", "http:/");
+                Assert.AreEqual((String)urlsMenuExpected[i], foundUrl, true, "Found the url " + urlsMenu[i] + " instead the expected " + urlsMenuExpected[i]);
             }
         }
 
@@ -206,10 +208,10 @@ namespace UnitTestProject1
 
             expectedUrlMenu.Add("http://www.basilico.net/lunch_menu.html");
             expectedUrlMenu.Add("http://www.basilico.net/dinner_menu.html");
-            expectedUrlMenu.Add("http://www.basilico.net///private_events_menu.html");
+            expectedUrlMenu.Add("http://www.basilico.net/private_events_menu.html");
             expectedUrlMenu.Add("http://www.basilico.net/catering_menu.html");
-            expectedUrlMenu.Add("http://basilico.net/fathers_day_menu.html");
             expectedUrlMenu.Add("http://basilico.net/valentines_day_menu.html");
+            expectedUrlMenu.Add("http://basilico.net/fathers_day_menu.html");
 
             return expectedUrlMenu;
         }

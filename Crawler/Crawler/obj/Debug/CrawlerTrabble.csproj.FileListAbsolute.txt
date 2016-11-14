@@ -1,9 +1,12 @@
 C:\workspaces\wTrabble\Crawler\Crawler\bin\Debug\Crawler.exe.config
 C:\workspaces\wTrabble\Crawler\Crawler\obj\Debug\Crawler.exe
 C:\workspaces\wTrabble\Crawler\Crawler\obj\Debug\Crawler.pdb
-C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\obj\Debug\CrawlerTrabble.csprojResolveAssemblyReference.cache
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\Crawler.exe.config
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\Crawler.exe
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\Crawler.pdb
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\HtmlAgilityPack.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\bin\Debug\HtmlAgilityPack.xml
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\obj\Debug\CrawlerTrabble.csprojResolveAssemblyReference.cache
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\obj\Debug\Crawler.exe
 C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\Crawler\obj\Debug\Crawler.pdb
