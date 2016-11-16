@@ -1,0 +1,11 @@
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\GooglePlaceAPITrabble\obj\Debug\GooglePlaceAPITrabble.csprojResolveAssemblyReference.cache
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\GooglePlaceAPITrabble\bin\Debug\GooglePlaceAPITrabble.exe.config
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\GooglePlaceAPITrabble\bin\Debug\GooglePlaceAPITrabble.exe
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\GooglePlaceAPITrabble\bin\Debug\GooglePlaceAPITrabble.pdb
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\GooglePlaceAPITrabble\obj\Debug\GooglePlaceAPITrabble.exe
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\GooglePlaceAPITrabble\obj\Debug\GooglePlaceAPITrabble.pdb
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\GooglePlaceAPITrabble\bin\Debug\Newtonsoft.Json.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\GooglePlaceAPITrabble\bin\Debug\Newtonsoft.Json.xml
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\GooglePlaceAPITrabble\bin\Debug\HtmlAgilityPack.dll
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\GooglePlaceAPITrabble\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\MarceloSimara\Source\Repos\csharp-projects\Crawler\GooglePlaceAPITrabble\bin\Debug\HtmlAgilityPack.xml
