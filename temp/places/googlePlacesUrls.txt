@@ -1,0 +1,1 @@
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=1.3269,103.85225&radius=300&types=food&name=&key=AIzaSyDsDqIho4W6umBh6rP0QMPDgi0XIMDzczo
