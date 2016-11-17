@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GooglePlacesAPI
@@ -16,34 +17,87 @@ namespace GooglePlacesAPI
         
         public void getPlaces()
         {
+            //X-> lines
+            //Y-> columns
+            //max x = 1.467792     min x = 1.240919
+            //max y = 104.028248     min y = 103.613171
+            //step X 10 m = 0.000100
+            //step Y 10 m = 0.000150
+            //1.240919, 103.832554 -> south limit
+            //1.467792, 103.805089 -> north limit
+            //1.360365, 104.028248 -> east limit
+            //1.272840, 103.613171 -> west limit
             //1.332625,103.791126
-            String latitude = "1.3310614";
+
             //String latitude = "-33.8670";
-            String longitude = "103.7912269";
             //String longitude = "151.1957";
-            double radius = 5000000;
+
+            //Double maxX = 1.467800;
+            Double maxX = 1.367800;
+            //Double maxY = 104.028250;
+            Double maxY = 104.008250;
+            //Double minX = 1.240900;
+            Double minX = 1.300900;
+            //Double minY = 103.613150;
+            Double minY = 103.813150;
+            //Double stepX = 0.000100; //10 m
+            Double stepX = 0.001000;
+            //Double stepY = 0.000150; //10 m
+            Double stepY = 0.001150;
+            
+            String latitude;
+            String longitude;
+            //double radius = 1000;
+            double radius = 300;
             String types = "food";
             String name = "";
-            //String name = "cruise";
             String apikey = "AIzaSyDsDqIho4W6umBh6rP0QMPDgi0XIMDzczo";
-            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+radius+"&types="+types+"&name="+name+"&key="+apikey;
-            //String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670,151.1957&radius=500&types=food&name=cruise&key=AIzaSyDsDqIho4W6umBh6rP0QMPDgi0XIMDzczo";
+            //String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + latitude + "," + longitude + "&radius=" + radius + "&types=" + types + "&name=" + name + "&key=" + apikey;
+            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 
-            HttpWebRequest webRequest = WebRequest.Create(@url) as HttpWebRequest;
-            webRequest.Timeout = 20000;
-            webRequest.Method = "GET";
+            IList<Place> places = new List<Place>();
+            int numRequest = 0;
 
-            WebResponse response = webRequest.GetResponse();
-            using (var stream = response.GetResponseStream())
+            for (Double i = minX; i < maxX; i += stepX)
             {
-                var r = new StreamReader(stream);
-                var resp = r.ReadToEnd();
-                writeResponseInFile(resp, @"c:\temp\googlePlacesApi.txt");
-                GooglePlaceObjectParser objectPlaces = JsonConvert.DeserializeObject<GooglePlaceObjectParser>(@resp);
-                getPlacesWebSite(objectPlaces);
-                //Console.Write(resp);
-                Console.ReadLine();
+                latitude = ("" + i).Replace(",", ".");//.Substring(0, 8);
+                for (Double j = minY; j < maxY; j += stepY)
+                {
+                    longitude = ("" + j).Replace(",", ".");//.Substring(0, 10);
+                    url = url + "location=" + latitude + "," + longitude + "&radius=" + radius + "&types=" + types + "&name=" + name + "&key=" + apikey;
+
+                    HttpWebRequest webRequest = WebRequest.Create(@url) as HttpWebRequest;
+                    webRequest.Timeout = 20000;
+                    webRequest.Method = "GET";
+
+                    //Console.WriteLine(url);
+                    writeResponseInFile(url+"\n", @"c:\temp\googlePlacesUrls.txt");
+                    WebResponse response = webRequest.GetResponse();
+                    numRequest++;
+                    using (var stream = response.GetResponseStream())
+                    {
+                        var r = new StreamReader(stream);
+                        var resp = r.ReadToEnd();
+                        //writeResponseInFile(resp, @"c:\temp\googlePlacesApi.txt");
+                        GooglePlaceObjectParser objectPlaces = JsonConvert.DeserializeObject<GooglePlaceObjectParser>(@resp);
+                        getPlacesWebSite(objectPlaces);
+
+                        foreach (Place p in objectPlaces.Results) 
+                        {
+                            if (!places.Contains(p))
+                            {
+                                places.Add(p);
+                            }
+                        }
+                        //Console.Write(resp);
+                        //Console.ReadLine();
+                    }
+                    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+                }
+                //Console.WriteLine(numRequest);
             }
+
+            writePlacesCsvFile(places);
         }
 
         public void getPlacesWebSite(GooglePlaceObjectParser objectPlaces)
@@ -56,7 +110,7 @@ namespace GooglePlacesAPI
             foreach (Place place in places) 
             {
                 name = place.Name;
-                url = url + name + location;
+                url = url + name + " " + location;
                 HttpWebRequest webRequest = WebRequest.Create(@url) as HttpWebRequest;
                 webRequest.Timeout = 20000;
                 webRequest.Method = "GET";
@@ -66,21 +120,60 @@ namespace GooglePlacesAPI
                 {
                     var r = new StreamReader(stream);
                     var resp = r.ReadToEnd();
-                    writeResponseInFile(resp, @"c:\temp\googlePlacesHtml"+name+".html");
+                    //writeResponseInFile(resp, @"c:\temp\googlePlacesHtml"+name+".html");
 
                     HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
                     doc.LoadHtml(resp);
 
                     var findclasses = doc.DocumentNode.Descendants("a").Where(d => d.InnerText.Contains("Website"));
-                    
+
+                    string pattern = "(://.*)(.*)(/)";
                     foreach (HtmlAgilityPack.HtmlNode s in findclasses)
                     {
-                        Console.WriteLine(s.Attributes[1].Value);
+                        if (s.Attributes.Count > 0 && s.InnerText.Length <= "Website".Length)
+                        {
+                            //Console.WriteLine(url);
+                            //Console.WriteLine(name);
+                            //Console.WriteLine(pattern);
+                            //Console.WriteLine(s.Attributes[1].Value);
+                            MatchCollection matches = Regex.Matches(s.Attributes[s.Attributes.Count-1].Value, pattern);
+                            int count = 0;
+                            foreach (var match in matches)
+                            {
+                                //Console.WriteLine(match.ToString().Replace("://", ""));
+                                //writeResponseInFile(match.ToString().Replace("://", "")+"\n", @"c:\temp\googlePlacesWebSites.txt");
+                                place.Website = match.ToString().Replace("://", "");
+                                if (count >= 1)
+                                {
+                                    break;
+                                }
+                                count++;
+                            }
+                        }
                     }
-                    
-                    Console.ReadLine();
                 }
+                //Console.WriteLine("\n");
                 url = "https://www.google.com." + locationGoogle + "/search?q=";
+            }
+            //Console.ReadLine();
+        }
+
+        public void writePlacesCsvFile(IList<Place> places)
+        {
+            String path;
+            foreach (Place place in places) {
+                path = @"c:\temp\"+place.Name+".csv";
+                // This text is added only once to the file.
+                if (!File.Exists(path))
+                {
+                    File.WriteAllText(path, "");
+                }
+
+                // This text is always added, making the file longer over time
+                // if it is not deleted.
+                File.WriteAllText(path, "");
+                File.AppendAllText(path, place.getNameOfAttributes()+"\n");
+                File.AppendAllText(path, place.ToString()+"\n");
             }
         }
 
@@ -105,6 +198,7 @@ namespace GooglePlacesAPI
 
             // This text is always added, making the file longer over time
             // if it is not deleted.
+            File.WriteAllText(path, "");
             File.AppendAllText(path, resp);          
         }
 

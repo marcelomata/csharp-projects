@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GooglePlaceAPITrabbleTest
 {
     [TestClass]
-    public class UnitTest1
+    public class GooglePlaceAPITrabbleTest
     {
         [TestMethod]
         public void TestMethod1()

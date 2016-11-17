@@ -192,7 +192,7 @@ namespace CrawlerTrabble
         public void loadCategoriesMenu()
         {
             setKeyWord("menu_category");
-            categories= getNodesByKeyWordClass(currentUrlMenu);
+            categories = getNodesByKeyWordClass(currentUrlMenu);
         }
 
         public ArrayList getCategoriesMenu()

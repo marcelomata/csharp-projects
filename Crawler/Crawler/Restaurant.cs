@@ -9,11 +9,12 @@ namespace Restaurant
 {
     class Restaurant
     {
-        private ArrayList menus;
+        public String name { get; set; }
+        public IList<Menu> menus { get; set; }
 
-        public Restaurant()
+        public Restaurant(String n)
         {
-            menus = new ArrayList();
+            name = n;
         }
 
         public void addMenu(Menu menu)
@@ -21,28 +22,21 @@ namespace Restaurant
             menus.Add(menu);
         }
 
-        public ArrayList getMenus()
+        public IList<MenuCategory> getCategories()
         {
-            return menus;
+            return categories;
         }
 
     }
 
-
     class Menu
     {
-        private String name;
-        private ArrayList categories;
+        public String name { get; set; }
+        public IList<MenuCategory> categories { get; set; }
 
         public Menu(String n)
         {
             name = n;
-            categories = new ArrayList();
-        }
-
-        public ArrayList getCategories() 
-        {
-            return categories;
         }
 
         public void addCategories(MenuCategory category)
@@ -50,58 +44,45 @@ namespace Restaurant
             categories.Add(category);
         }
 
+        public IList<MenuCategory> getCategories()
+        {
+            return categories;
+        }
     }
 
     class MenuCategory
     {
-        private String name;
-        private ArrayList itens;
+        public String name { get; set; }
+        public IList<MenuCategoryItem> items { get; set; }
 
         public MenuCategory(String n) 
         {
             name = n;
-            itens = new ArrayList();
         }
 
         public void addItem(MenuCategoryItem item)
         {
-            itens.Add(item);
+            items.Add(item);
         }
 
-        public ArrayList getItens() 
+        public IList<MenuCategoryItem> getItems() 
         {
-            return itens;
+            return items;
         }
 
     }
 
-
     class MenuCategoryItem
     {
-        private String name;
-        private double price;
-        private String description;
+        public String name { get; set; }
+        public String description { get; set; }
+        public Double price { get; set; }
 
         public MenuCategoryItem(String n, double p, String d)
         {
             name = n;
             price = p;
             description = d;
-        }
-
-        public double getPrice() 
-        {
-            return price;
-        }
-
-        public String getName()
-        {
-            return name;
-        }
-
-        public String getDescription()
-        {
-            return description;
         }
     }
 }
