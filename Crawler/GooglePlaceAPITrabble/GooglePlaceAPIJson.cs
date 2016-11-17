@@ -17,18 +17,23 @@ namespace GooglePlaceAPIJson
             StringBuilder builder = new StringBuilder();
             foreach(Place place in Results) 
             {
-                builder.Append(place.ToString());
-                builder.Append(";");
+                if (place != null)
+                {
+                    builder.Append(place.ToString());
+                }
             }
             return builder.ToString();
         }
 
         public String getNameOfAttributes() {
             StringBuilder builder = new StringBuilder();
-            foreach (Place place in Results)
+            if (Results != null)
             {
-                builder.Append(place.getNameOfAttributes());
-                builder.Append(";");
+                foreach (Place place in Results)
+                {
+                    builder.Append(Place.getNameOfAttributes());
+                    builder.Append(";");
+                }
             }
             return builder.ToString();
         }
@@ -71,20 +76,35 @@ namespace GooglePlaceAPIJson
             builder.Append(";");
             builder.Append(Name);
             builder.Append(";");
-            builder.Append(Geometry.ToString());
-            builder.Append(";");
+            if (Geometry != null)
+            {
+                builder.Append(Geometry.ToString());
+            }
+            else
+            {
+                builder.Append(Geometry.printNull());
+            }
             builder.Append(Icon);
             builder.Append(";");
             if (Opening_hours != null)
             {
                 builder.Append(Opening_hours.ToString());
-                builder.Append(";");
             }
-            foreach (Photo photo in Photos)
+            else
             {
-                builder.Append(photo.ToString());
-                builder.Append(";");
+                builder.Append(OpeningHours.printNull());
             }
+            builder.Append("[");
+            if (Photos != null)
+            {
+                foreach (Photo photo in Photos)
+                {
+                    builder.Append(photo.ToString());
+                    builder.Append(",");
+                }
+            }
+            builder.Append("]");
+            builder.Append(";");
             builder.Append(Place_id);
             builder.Append(";");
             builder.Append(Rating);
@@ -93,11 +113,17 @@ namespace GooglePlaceAPIJson
             builder.Append(";");
             builder.Append(Scope);
             builder.Append(";");
-            foreach (String type in Types)
+            builder.Append("[");
+            if (Types != null)
             {
-                builder.Append(type);
-                builder.Append(";");
+                foreach (String type in Types)
+                {
+                    builder.Append(type);
+                    builder.Append(",");
+                }
             }
+            builder.Append("]");
+            builder.Append(";");
             builder.Append(Vicinity);
             builder.Append(";");
             builder.Append(Website);
@@ -105,7 +131,7 @@ namespace GooglePlaceAPIJson
             return builder.ToString();
         }
 
-        public String getNameOfAttributes()
+        public static String getNameOfAttributes()
         {
             StringBuilder builder = new StringBuilder();
             builder.Append("Id");
@@ -113,23 +139,10 @@ namespace GooglePlaceAPIJson
             builder.Append("Place Name");
             builder.Append(";");
             builder.Append(Geometry.getNameOfAttributes());
-            builder.Append(";");
             builder.Append("Icon");
             builder.Append(";");
-            if (Opening_hours != null)
-            {
-                builder.Append(Opening_hours.getNameOfAttributes());
-                builder.Append(";");
-            }
-            if (Photos != null)
-            {
-                foreach (Photo photo in Photos)
-                {
-                    builder.Append(photo.getNameOfAttributes());
-                    builder.Append(";");
-                }
-            }
-            builder.Append("Place_id");
+            builder.Append(OpeningHours.getNameOfAttributes());
+            builder.Append(Photo.getNameOfAttributes());
             builder.Append(";");
             builder.Append("Rating");
             builder.Append(";");
@@ -137,17 +150,15 @@ namespace GooglePlaceAPIJson
             builder.Append(";");
             builder.Append("Scope");
             builder.Append(";");
-            foreach (String type in Types)
-            {
-                builder.Append("type");
-                builder.Append(";");
-            }
+            builder.Append("type");
+            builder.Append(";");
             builder.Append("Vicinity");
             builder.Append(";");
             builder.Append("Website");
             builder.Append(";");
             return builder.ToString();
         }
+
     }
 
     public class Geometry
@@ -159,25 +170,30 @@ namespace GooglePlaceAPIJson
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(Location.ToString());
-            builder.Append(";");
             if (Viewport != null)
             {
                 builder.Append(Viewport.ToString());
-                builder.Append(";");
+            }
+            else
+            {
+                builder.Append(Viewport.printNull());
             }
             return builder.ToString();
         }
 
-        public String getNameOfAttributes()
+        public static String getNameOfAttributes()
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append("Location"+Location.getNameOfAttributes());
-            builder.Append(";");
-            if (Viewport != null)
-            {
-                builder.Append("Viewport"+Viewport.getNameOfAttributes());
-                builder.Append(";");
-            }
+            builder.Append("Location" + Coordinates.getNameOfAttributes());
+            builder.Append("Viewport"+Viewport.getNameOfAttributes());
+            return builder.ToString();
+        }
+
+        public static String printNull()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(Coordinates.printNull());
+            builder.Append(Viewport.printNull());
             return builder.ToString();
         }
         
@@ -198,12 +214,22 @@ namespace GooglePlaceAPIJson
             return builder.ToString();
         }
 
-        public String getNameOfAttributes()
+        public static String getNameOfAttributes()
         {
             StringBuilder builder = new StringBuilder();
             builder.Append("lat");
             builder.Append(";");
             builder.Append("lng");
+            builder.Append(";");
+            return builder.ToString();
+        }
+
+        public static String printNull()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("");
+            builder.Append(";");
+            builder.Append("");
             builder.Append(";");
             return builder.ToString();
         }
@@ -218,19 +244,23 @@ namespace GooglePlaceAPIJson
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(Northeast.ToString());
-            builder.Append(";");
             builder.Append(Southwest.ToString());
-            builder.Append(";");
             return builder.ToString();
         }
 
-        public String getNameOfAttributes()
+        public static String getNameOfAttributes()
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append("Northeast"+Northeast.getNameOfAttributes());
-            builder.Append(";");
-            builder.Append("Southwest"+Southwest.getNameOfAttributes());
-            builder.Append(";");
+            builder.Append("Northeast" + Coordinates.getNameOfAttributes());
+            builder.Append("Southwest" + Coordinates.getNameOfAttributes());
+            return builder.ToString();
+        }
+
+        public static String printNull()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(Coordinates.printNull());
+            builder.Append(Coordinates.printNull());
             return builder.ToString();
         }
     }
@@ -245,24 +275,37 @@ namespace GooglePlaceAPIJson
             StringBuilder builder = new StringBuilder();
             builder.Append(Open_now);
             builder.Append(";");
+            builder.Append("[");
             foreach (String day in Weekday_text)
             {
                 builder.Append(day);
-                builder.Append(";");
+                builder.Append(",");
             }
+            builder.Append("]");
+            builder.Append(";");
             return builder.ToString();
         }
 
-        public String getNameOfAttributes()
+        public static String getNameOfAttributes()
         {
             StringBuilder builder = new StringBuilder();
             builder.Append("Open_now");
             builder.Append(";");
-            foreach (String day in Weekday_text)
-            {
-                builder.Append("day");
-                builder.Append(";");
-            }
+            
+            builder.Append("day");
+            builder.Append(";");
+            
+            return builder.ToString();
+        }
+
+        public static String printNull()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("");
+            builder.Append(";");
+            builder.Append("[");
+            builder.Append("]");
+            builder.Append(";");
             return builder.ToString();
         }
     }
@@ -278,33 +321,33 @@ namespace GooglePlaceAPIJson
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(Height);
-            builder.Append(";");
+            builder.Append(",");
             builder.Append(Width);
-            builder.Append(";");
+            builder.Append(",");
+            builder.Append("[");
             foreach (String s in Html_attributions)
             {
                 builder.Append(s);
-                builder.Append(";");
+                builder.Append(",");
             }
+            builder.Append("]");
+            builder.Append(",");
             builder.Append(Photo_reference);
-            builder.Append(";");
             return builder.ToString();
         }
 
-        public String getNameOfAttributes()
+        public static String getNameOfAttributes()
         {
             StringBuilder builder = new StringBuilder();
             builder.Append("Photo Height");
-            builder.Append(";");
+            builder.Append(",");
             builder.Append("Photo Width");
-            builder.Append(";");
-            foreach (String s in Html_attributions)
-            {
-                builder.Append("Html_attributions");
-                builder.Append(";");
-            }
+            builder.Append(",");
+            
+            builder.Append("Html_attributions");
+            builder.Append(",");
+            
             builder.Append("Photo_reference");
-            builder.Append(";");
             return builder.ToString();
         }
     }

@@ -55,7 +55,8 @@ namespace GooglePlacesAPI
             //String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + latitude + "," + longitude + "&radius=" + radius + "&types=" + types + "&name=" + name + "&key=" + apikey;
             String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 
-            IList<Place> places = new List<Place>();
+            IList<Place> allPlaces = new List<Place>();
+            IList<Place> currentPlaces;
             int numRequest = 0;
 
             for (Double i = minX; i < maxX; i += stepX)
@@ -63,6 +64,7 @@ namespace GooglePlacesAPI
                 latitude = ("" + i).Replace(",", ".");//.Substring(0, 8);
                 for (Double j = minY; j < maxY; j += stepY)
                 {
+                    currentPlaces = new List<Place>();
                     longitude = ("" + j).Replace(",", ".");//.Substring(0, 10);
                     url = url + "location=" + latitude + "," + longitude + "&radius=" + radius + "&types=" + types + "&name=" + name + "&key=" + apikey;
 
@@ -80,28 +82,43 @@ namespace GooglePlacesAPI
                         var resp = r.ReadToEnd();
                         //writeResponseInFile(resp, @"c:\temp\googlePlacesApi.txt");
                         GooglePlaceObjectParser objectPlaces = JsonConvert.DeserializeObject<GooglePlaceObjectParser>(@resp);
-                        getPlacesWebSite(objectPlaces);
+                        //getPlacesWebSite(objectPlaces);
 
                         foreach (Place p in objectPlaces.Results) 
                         {
-                            if (!places.Contains(p))
+                            if (!allPlaces.Contains(p))
                             {
-                                places.Add(p);
+                                allPlaces.Add(p);
+                                currentPlaces.Add(p);
                             }
                         }
                         //Console.Write(resp);
                         //Console.ReadLine();
                     }
                     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+                    writePlacesCsvFile(currentPlaces);
                 }
-                //Console.WriteLine(numRequest);
             }
-
-            writePlacesCsvFile(places);
+            Console.WriteLine(allPlaces.Count);
         }
 
         public void getPlacesWebSite(GooglePlaceObjectParser objectPlaces)
         {
+            //byte[] buffer = Encoding.ASCII.GetBytes("code=" + 1234 + "&client_id=marcatam.o&client_secret=Incompletude31&redirect_uri=xxxx&grant_type=authorization_code");
+            /*
+            byte[] buffer = Encoding.ASCII.GetBytes("code=" + 1234 + "&client_id=marcatam.o&client_secret=Incompletude31&grant_type=authorization_code");
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create("https://accounts.google.com/o/oauth2/token");
+            req.Method = "POST";
+            req.ContentType = "application/x-www-form-urlencoded";
+            req.ContentLength = buffer.Length;
+
+            Stream strm = req.GetRequestStream();
+            strm.Write(buffer, 0, buffer.Length);
+            strm.Close();
+
+            //HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+             */
+
             IList<Place> places = objectPlaces.Results;
             String locationGoogle = "sg";
             String name;
@@ -162,18 +179,19 @@ namespace GooglePlacesAPI
         {
             String path;
             foreach (Place place in places) {
-                path = @"c:\temp\"+place.Name+".csv";
+                //path = @"c:\temp\"+place.Name.Replace("/", "")+".csv";
+                path = @"c:\temp\PlacesSingapore.csv";
                 // This text is added only once to the file.
                 if (!File.Exists(path))
                 {
                     File.WriteAllText(path, "");
+                    File.AppendAllText(path, Place.getNameOfAttributes() + "\n");
                 }
 
                 // This text is always added, making the file longer over time
                 // if it is not deleted.
-                File.WriteAllText(path, "");
-                File.AppendAllText(path, place.getNameOfAttributes()+"\n");
-                File.AppendAllText(path, place.ToString()+"\n");
+                //File.WriteAllText(path, "");
+                File.AppendAllText(path, place.ToString() + "\n");
             }
         }
 
